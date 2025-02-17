@@ -36,7 +36,7 @@ def play_game():
                     break
                 else:
                     print("Cell is occupied. Try again.")
-            except:
+            except ValueError or IndexError:
                 print("Invalid input. Enter row and column as numbers between 0 and 2.")
 
         print_board(board)
