@@ -19,6 +19,21 @@ def is_full(board):
     return all(cell != " " for row in board for cell in row)
 
 
+def get_player_move(board, current_player):
+    """Get and validate the player's move."""
+    while True:
+        try:
+            row, col = map(int, input(f"Player {current_player}, enter row and column (0-2): ").split())
+            if board[row][col] == " ":
+                return row, col
+            else:
+                print("Cell is occupied. Try again.")
+        except ValueError:
+            print("Invalid input. Please enter numbers for row and column.")
+        except IndexError:
+            print("Out of range. Please enter numbers between 0 and 2.")
+
+
 def play_game():
     board = [[" " for _ in range(3)] for _ in range(3)]
     players = ["X", "O"]
@@ -28,10 +43,13 @@ def play_game():
     for turn in range(9):
         current_player = players[turn % 2]
 
-        player_move(board, current_player)
+        # Get and place the player's move
+        row, col = get_player_move(board, current_player)
+        board[row][col] = current_player
 
         print_board(board)
 
+        # Check for winner or draw
         if check_winner(board, current_player):
             print(f"Player {current_player} wins!")
             return
@@ -43,17 +61,7 @@ def play_game():
     print("It's a draw!")
 
 
-def player_move(board, current_player):
-    while True:
-        try:
-            row, col = map(int, input(f"Player {current_player}, enter row and column (0-2): ").split())
-            if board[row][col] == " ":
-                board[row][col] = current_player
-                break
-            else:
-                print("Cell is occupied. Try again.")
-        except ValueError or IndexError:
-            print("Invalid input. Enter row and column as numbers between 0 and 2.")
+
 
 
 play_game()
