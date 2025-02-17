@@ -28,16 +28,7 @@ def play_game():
     for turn in range(9):
         current_player = players[turn % 2]
 
-        while True:
-            try:
-                row, col = map(int, input(f"Player {current_player}, enter row and column (0-2): ").split())
-                if board[row][col] == " ":
-                    board[row][col] = current_player
-                    break
-                else:
-                    print("Cell is occupied. Try again.")
-            except ValueError or IndexError:
-                print("Invalid input. Enter row and column as numbers between 0 and 2.")
+        player_move(board, current_player)
 
         print_board(board)
 
@@ -50,6 +41,19 @@ def play_game():
             return
 
     print("It's a draw!")
+
+
+def player_move(board, current_player):
+    while True:
+        try:
+            row, col = map(int, input(f"Player {current_player}, enter row and column (0-2): ").split())
+            if board[row][col] == " ":
+                board[row][col] = current_player
+                break
+            else:
+                print("Cell is occupied. Try again.")
+        except ValueError or IndexError:
+            print("Invalid input. Enter row and column as numbers between 0 and 2.")
 
 
 play_game()
